@@ -1,0 +1,71 @@
+---
+title: "Security, keys, and access"
+sidebarTitle: "Security and keys"
+description: "PGP encryption, IP whitelisting, SFTP credentials, and key rotation for Host-to-Host"
+---
+
+H2H protects your payments in three layers: encrypted transport (SFTP), file-level PGP encryption in both directions, and access restricted to your whitelisted IP address and SFTP credentials.
+
+<Warning>
+Every file exchanged in either direction must be PGP-encrypted. Unencrypted files uploaded to the SFTP server are rejected and not processed.
+</Warning>
+
+## Encryption keys
+
+H2H uses two PGP key pairs, one owned by each side.
+
+| Key | Who owns it | What it's used for |
+|---|---|---|
+| `bank_public_key` | First Bank DRC. Sent to you during onboarding. | You encrypt every payment file with it before upload. Only the Bank's private key can decrypt these files. |
+| `customer_public_key` | You. You generate it and upload it to your SFTP folder during onboarding. | The Bank encrypts every acknowledgement file with it. Only your private key can decrypt them. |
+
+## Encryption standards
+
+| Attribute | Requirement |
+|---|---|
+| **Encryption** | PGP / GPG (OpenPGP standard, RFC 4880) |
+| **Key length** | RSA 2048-bit minimum. RSA 4096-bit recommended. |
+| **Symmetric cipher** | AES-256 (used by PGP for the session key) |
+| **Transport** | SFTP. Plain FTP is not supported. |
+| **File extension** | `.pgp` or `.gpg`, for example `payment_file.xml.pgp` |
+
+## IP whitelisting
+
+The SFTP server only accepts connections from approved IP addresses. You give the Bank your static outbound IP address during onboarding, and the Bank's IT Security team whitelists it. Connections from any other address are refused.
+
+<Warning>
+If your static IP address is going to change, tell First Bank DRC in advance so the whitelist can be updated first. Allow at least 2 business days. Disruption caused by an IP change the Bank wasn't told about is your responsibility.
+</Warning>
+
+## SFTP username and password
+
+On top of IP whitelisting, you sign in to SFTP with a username and password. The Bank creates your SFTP account during onboarding and sends the credentials through a secure channel, with the password sent separately from the username.
+
+- Store the credentials securely, and limit access to the people and systems that need them.
+- Tell the Bank straight away if you think the credentials have been exposed.
+- Ask your relationship manager if you need a password reset.
+
+## Keeping keys safe
+
+- Never share, email, or attach PGP private keys or SFTP passwords, including in support tickets.
+- Exchange public keys and SFTP credentials only through the secure channel agreed at onboarding.
+- A suspected compromise of any key or SFTP password is treated as a critical security incident. Report it to the Bank immediately.
+
+## Key rotation and changes
+
+### When the Bank rotates its key
+
+First Bank DRC may rotate `bank_public_key` periodically or after a security incident. You'll get advance notice and a cut-over date. Update your integration to use the new key before that date. Files encrypted with the old key after cut-over are rejected.
+
+### When you rotate your key
+
+Tell First Bank DRC when you rotate your own key. Upload the new `customer_public_key` to your SFTP folder. The Bank must confirm it has received the new key before the old one is retired.
+
+### Requesting a change
+
+| Change | How to request it | Lead time |
+|---|---|---|
+| **IP whitelist change** | Email the Bank's IT Security team through your relationship manager | At least 2 business days |
+| **SFTP password reset** | Your relationship manager. The new password is sent through the agreed secure channel. | Confirmed by the Bank |
+| **Bank key rotation (requested by you)** | Your relationship manager. A new key is issued and a cut-over date agreed. | Agreed per request |
+| **Your key rotation** | Upload the new key, then tell your relationship manager | The Bank must confirm before the old key is retired |

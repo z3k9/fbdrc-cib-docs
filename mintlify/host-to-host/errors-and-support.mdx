@@ -1,0 +1,59 @@
+---
+title: "Errors and support"
+description: "Common rejection reasons, how to resubmit safely, and how to get help with Host-to-Host"
+---
+
+## Common errors
+
+| Problem | Result | What to do |
+|---|---|---|
+| File not encrypted with the correct `bank_public_key` | `FILE_REJECTED` | Re-encrypt the file with the current `bank_public_key` and resubmit. |
+| File is not valid XML, or fails schema validation | `FILE_REJECTED` | Validate the file against the Bank's H2H XSD, fix every error, and resubmit. |
+| Upload attempted from an IP address that isn't whitelisted | Connection refused | Check the outbound IP address you're using. If it has changed, ask the Bank to update the whitelist. |
+| Duplicate `<fileid>` | `FILE_REJECTED` | Check the original file wasn't already processed. If it wasn't, give the file a new unique `<fileid>` and resubmit. |
+| `customer_public_key` missing, expired, or invalid | `FILE_REJECTED` (acknowledgement named, for example, `missing_public_key`) | Upload a valid `customer_public_key` to your customer folder, then resubmit with a new `<fileid>`. |
+| Duplicate `<transactionid>` in the file | Transaction `FAILED` | Give every transaction a unique `<transactionid>`, then resubmit only the failed transactions. |
+| Not enough funds in the source account | Transaction `FAILED` | Make sure the source account has enough available balance before submitting. |
+| Invalid destination account number | Transaction `FAILED` | Confirm the account number with the beneficiary and resubmit. |
+| Invalid `<destinationbankcode>` | Transaction `FAILED` | Confirm the correct bank code and resubmit. |
+| Missing required field | Transaction `FAILED` | Check the [field table](/host-to-host/file-specifications) for that payment type and fill in every required field. |
+| Invalid or unsupported `<remittancepurposecode>` (foreign transfers) | Transaction `FAILED` | Confirm the correct BCC purpose code with your relationship manager and resubmit. |
+| Invalid SWIFT/BIC code (foreign transfers) | Transaction `FAILED` | Check the 8 or 11 character code with the beneficiary's bank and resubmit. |
+
+## Resubmitting safely
+
+<Warning>
+**Never resubmit a whole file because some transactions failed.** Resubmit only the transactions marked `FAILED`, in a new file with a new `<fileid>` and new `<transactionid>` values. Resending the full file can create duplicate payments.
+</Warning>
+
+Before resubmitting anything, make sure you have an acknowledgement for the original file and know the status of every transaction in it. If you don't, contact the Bank first.
+
+## Raising an issue
+
+Contact the First Bank DRC Corporate Banking Technology help desk, or your relationship manager. For critical failures affecting live payments, also call straight away. The Bank shares its help desk and out-of-hours contact details during onboarding.
+
+To help the Bank resolve the issue quickly, include:
+
+| Item | Details |
+|---|---|
+| **Your organisation** | Organisation name, customer code, and SFTP username |
+| **File** | File name, `<fileid>`, payment type, and upload date and time (WAT) |
+| **Transactions** | The affected `<transactionid>` values, amounts, and `<bankref>` if you received an acknowledgement |
+| **Acknowledgement** | Acknowledgement file name, and the file and transaction `<status>` and `<errormessage>` values |
+| **What happened** | What you saw, the exact error text, and when it started |
+| **Scope** | One transaction, one file, or all your files |
+| **What you've done so far** | Especially whether you have already resubmitted anything |
+| **Contacts** | Name, phone, and email of your technical and treasury contacts for this issue |
+
+<Warning>
+Never send private keys, SFTP passwords, or decrypted payment files in tickets, emails, or chat. If evidence is needed, send masked screenshots or log extracts.
+</Warning>
+
+## Who to contact
+
+| Need | Contact |
+|---|---|
+| **General questions** | Your First Bank DRC relationship manager |
+| **Technical support and production issues** | First Bank DRC Corporate Banking Technology help desk |
+| **IP whitelist changes** | The Bank's IT Security team, through your relationship manager. Allow at least 2 business days. |
+| **Key rotation** | Your relationship manager |

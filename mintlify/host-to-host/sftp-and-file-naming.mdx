@@ -1,0 +1,69 @@
+---
+title: "SFTP folders and file naming"
+sidebarTitle: "SFTP folders and naming"
+description: "Where to upload files, where acknowledgements appear, and how to name and encode your files"
+---
+
+## Folder structure
+
+The Bank creates a dedicated folder for your organisation on the SFTP server:
+
+```text
+/h2h/customers/
+└── [customer_folder_name]/       ← you upload customer_public_key and payment files here
+    └── Acknowledgements/         ← the CIB platform writes acknowledgement files here
+```
+
+| Folder | What it's for |
+|---|---|
+| **`[customer_folder_name]/`** | Your customer folder. Upload your `customer_public_key` here (once at onboarding, and again whenever you rotate it), plus every encrypted payment file. The CIB platform checks this folder for new files and moves them out once they're processed. |
+| **`Acknowledgements/`** | Where the CIB platform writes an acknowledgement for each file it processes. Collect them from here for reconciliation. |
+
+<Note>
+Upload your public key and payment files to the customer folder itself, not to the `Acknowledgements` sub-folder. The Bank confirms your exact folder path when your account is set up.
+</Note>
+
+## Naming payment files
+
+Use a consistent file name so files are easy to process and reconcile. The recommended pattern is:
+
+```text
+[CustomerCode]_[PaymentType]_[YYYYMMDD]_[HHMMSS].xml.pgp
+```
+
+For example:
+
+```text
+ACMECORP_INTRABANK_20260601_143022.xml.pgp
+ACMECORP_INTERBANK_LCY_20260601_143500.xml.pgp
+ACMECORP_FOREIGN_20260601_150000.xml.pgp
+```
+
+<Info>
+The Bank confirms the naming convention during onboarding. If it specifies a different pattern, use that one.
+</Info>
+
+## Acknowledgement file names
+
+Acknowledgements are named after the file they relate to:
+
+```text
+ACK_[OriginalFileName]_[Timestamp].xml.pgp
+```
+
+For example:
+
+```text
+ACK_ACMECORP_INTRABANK_20260601_143022_20260601_144500.xml.pgp
+```
+
+If a file is rejected, the acknowledgement is named after the reason, so you can see the cause before you open it. For example, a file sent before you uploaded your `customer_public_key` produces an acknowledgement named with `missing_public_key`.
+
+## Encoding and size
+
+| Attribute | Requirement |
+|---|---|
+| **Character encoding** | UTF-8 |
+| **Line endings** | CRLF or LF. Both are accepted. CRLF is recommended for Windows-based systems. |
+| **Transactions per file** | A file can hold many `<transaction>` blocks inside one `<data>` element |
+| **Maximum file size and transaction count** | Confirmed by the Bank during onboarding |

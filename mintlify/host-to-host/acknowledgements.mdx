@@ -1,0 +1,54 @@
+---
+title: "Acknowledgement files"
+sidebarTitle: "Acknowledgements"
+description: "How to read the acknowledgement for each payment file and what each status code means"
+---
+
+After processing each payment file, the CIB platform writes an encrypted XML acknowledgement to the `/Acknowledgements/` folder inside your customer folder. It gives a status for the file as a whole, and for every transaction in it.
+
+## Structure
+
+```xml
+<AcknowledgementDocument>
+  <header>
+    <fileid>Reference of the original payment file</fileid>
+    <processeddate>Date the file was processed (YYYYMMDD)</processeddate>
+    <timestamp>Time the acknowledgement was generated (HHMMSS)</timestamp>
+    <status>FILE_ACCEPTED | FILE_REJECTED</status>
+  </header>
+  <results>
+    <transaction>
+      <transactionid>Original transaction ID from the payment file</transactionid>
+      <status>SUCCESS | PENDING | FAILED</status>
+      <bankref>First Bank DRC's internal transaction reference</bankref>
+      <errormessage>Error description (only when status is FAILED)</errormessage>
+    </transaction>
+    <!-- One <transaction> block per instruction in the original file -->
+  </results>
+</AcknowledgementDocument>
+```
+
+## Status codes
+
+### File level
+
+| Status | Meaning | What to do |
+|---|---|---|
+| `FILE_ACCEPTED` | The file passed structural and schema checks. Each transaction's result is in the `<results>` block. | Check the status of each transaction. |
+| `FILE_REJECTED` | The file failed validation, for example malformed XML, failed decryption, or a schema error. **No transactions were processed.** The acknowledgement is named after the failure reason, such as `missing_public_key`. | Fix the file and resubmit it. See [Errors and support](/host-to-host/errors-and-support). |
+
+### Transaction level
+
+| Status | Meaning | What to do |
+|---|---|---|
+| `SUCCESS` | The transaction was processed and sent to the payment rail. | Nothing. Keep the `<bankref>` for your records. |
+| `PENDING` | The transaction was accepted and is queued, for example waiting for FX approval on a foreign transfer, or for a settlement window. | Wait for it to complete. Contact the Bank if it stays pending longer than expected. |
+| `FAILED` | The transaction could not be processed. `<errormessage>` gives the reason. | Investigate, then resubmit only this transaction in a new file. |
+
+## Collecting and reconciling
+
+<Note>
+The Bank doesn't send notifications when an acknowledgement is ready. Your system needs to poll the `/Acknowledgements/` folder and match each acknowledgement against the file you submitted.
+</Note>
+
+Acknowledgement files stay in the folder for a period confirmed during onboarding. After that, the Bank may archive or delete them, so collect and store them promptly.

@@ -1,0 +1,75 @@
+---
+title: "H2H onboarding"
+sidebarTitle: "Onboarding"
+description: "The steps to connect your systems to First Bank DRC over Host-to-Host, from request to go-live"
+---
+
+Complete these steps in order before you go live. Each step is owned by your organisation, by First Bank DRC, or by both.
+
+<Steps>
+  <Step title="Request H2H access (you)">
+    Ask your First Bank DRC relationship manager for H2H connectivity. The Bank sends an onboarding form to capture your details and requirements.
+  </Step>
+  <Step title="Provide your static IP address (you)">
+    Give the Bank the static outbound IP address that all your SFTP connections will come from. Dynamic or shared IP addresses are not accepted.
+  </Step>
+  <Step title="SFTP account and folder set up (Bank)">
+    The Bank creates your SFTP account, username, and password, sets up your customer folder with its `Acknowledgements` sub-folder, and whitelists your IP address.
+  </Step>
+  <Step title="Receive SFTP details (Bank)">
+    The Bank sends you the SFTP server address, port, username, password, and full folder path through a secure channel. The password is sent separately from the username.
+  </Step>
+  <Step title="Receive the Bank's public key (Bank)">
+    The Bank sends you its PGP public key (`bank_public_key`) through a secure channel. Store it safely. You'll use it to encrypt every payment file.
+  </Step>
+  <Step title="Generate your PGP key pair (you)">
+    Create your own PGP key pair. Keep the private key secure and never share it.
+  </Step>
+  <Step title="Upload your public key (you)">
+    Upload your public key (`customer_public_key`) to your customer folder on the SFTP server. The Bank uses it to encrypt your acknowledgement files.
+  </Step>
+  <Step title="Test the connection (both)">
+    Connect to the SFTP server from your whitelisted IP using the username and password you were given. The Bank confirms that authentication and folder access work. Any issues are fixed before you continue.
+  </Step>
+  <Step title="Submit a test file (you)">
+    Prepare a test payment file in the correct XML format, encrypt it with `bank_public_key`, and upload it to your customer folder. The Bank confirms it was decrypted, read, and acknowledged.
+  </Step>
+  <Step title="Check the test results (both)">
+    Collect and decrypt the acknowledgement file from `/Acknowledgements/`, and confirm the transaction statuses are as expected.
+  </Step>
+  <Step title="Support handover (Bank)">
+    The Bank registers your organisation for H2H support and shares the support contacts.
+  </Step>
+  <Step title="Go-live sign-off (both)">
+    Both sides confirm all steps are complete. The Bank activates your account for production and tells you the go-live date.
+  </Step>
+</Steps>
+
+## Who does what
+
+<Tabs>
+  <Tab title="Your IT team">
+    - Generate and protect your PGP key pair, and keep the SFTP username and password safe
+    - Provide a static outbound IP address for whitelisting
+    - Upload `customer_public_key` to your customer folder
+    - Build and maintain the link between your ERP or treasury system and the SFTP server
+    - Encrypt every payment file with `bank_public_key` and validate it against the H2H XSD before upload
+    - Poll the `/Acknowledgements/` folder and process acknowledgement files
+    - Tell the Bank in advance about any change to your static IP address
+  </Tab>
+  <Tab title="Your finance team">
+    - Make sure source accounts have enough funds before files are submitted
+    - Review and approve payment files before submission, in line with your internal controls
+    - Reconcile acknowledgement files against what was submitted
+    - Work with your IT team on any failed payments that need investigating or resubmitting
+  </Tab>
+  <Tab title="First Bank DRC">
+    - Provide and maintain the SFTP server, your folders, and your SFTP account
+    - Generate and securely share `bank_public_key`
+    - Whitelist your static IP address
+    - Run the CIB platform that processes your files and creates acknowledgements
+    - Provide support during onboarding and in production
+    - Give you adequate notice of changes to the SFTP environment, file specifications, or keys
+    - Through your relationship manager: handle your onboarding request, share bank code and remittance purpose code lists on request, and keep you informed during incidents
+  </Tab>
+</Tabs>

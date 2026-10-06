@@ -1,0 +1,8 @@
+node_modules/
+react-site/build/
+react-site/.docusaurus/
+react-site/docs/
+react-site/doc-assets/
+react-site/static/logo/
+react-site/static/favicon.png
+.DS_Store

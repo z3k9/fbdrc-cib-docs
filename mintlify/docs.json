@@ -1,0 +1,300 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "First Bank DRC | CIB Guide",
+  "description": "Corporate Internet Banking user guide for First Bank DRC: Web Portal, Mobile App, and Host-to-Host",
+  "colors": {
+    "primary": "#152E4E",
+    "light": "#F0BE2E",
+    "dark": "#152E4E"
+  },
+  "favicon": "/favicon.png",
+  "logo": {
+    "light": "/logo/light.png",
+    "dark": "/logo/dark.png",
+    "href": "/"
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Support",
+        "href": "/support"
+      }
+    ]
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Web Portal",
+        "groups": [
+          {
+            "group": "Get started",
+            "pages": [
+              "index",
+              "overview",
+              "web-portal/sign-up",
+              "web-portal/dashboard"
+            ]
+          },
+          {
+            "group": "Accounts",
+            "pages": [
+              "web-portal/accounts/accounts",
+              "web-portal/accounts/transactions",
+              "web-portal/accounts/statements",
+              "web-portal/accounts/beneficiaries",
+              "web-portal/accounts/cheque-management",
+              "web-portal/accounts/virtual-token",
+              "web-portal/accounts/sweep-payments"
+            ]
+          },
+          {
+            "group": "Payments",
+            "pages": [
+              "web-portal/payments/send-money",
+              "web-portal/payments/own-account-transfer",
+              "web-portal/payments/fcy-interbank-transfer",
+              "web-portal/payments/bulk-transfer",
+              "web-portal/payments/standing-instructions",
+              "web-portal/payments/direct-debit",
+              "web-portal/payments/bank-to-wallet",
+              "web-portal/payments/invoices"
+            ]
+          },
+          {
+            "group": "Approvals",
+            "pages": [
+              "web-portal/approvals/transaction-queue",
+              "web-portal/approvals/activities-queue"
+            ]
+          },
+          {
+            "group": "Administration",
+            "pages": [
+              "web-portal/administration/officers",
+              "web-portal/administration/roles-permissions"
+            ]
+          },
+          {
+            "group": "Settings and support",
+            "pages": [
+              "web-portal/settings",
+              "support"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Mobile App",
+        "groups": [
+          {
+            "group": "Get started",
+            "pages": [
+              "mobile/overview",
+              "mobile/sign-in",
+              "mobile/home",
+              "mobile/accounts"
+            ]
+          },
+          {
+            "group": "Pay",
+            "pages": [
+              "mobile/payments/move-money",
+              "mobile/payments/own-account-transfer",
+              "mobile/payments/send-money",
+              "mobile/payments/foreign-transfer"
+            ]
+          },
+          {
+            "group": "Approvals",
+            "pages": [
+              "mobile/approvals"
+            ]
+          },
+          {
+            "group": "More",
+            "pages": [
+              "mobile/more",
+              "mobile/settings"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Host-to-Host",
+        "groups": [
+          {
+            "group": "Get started",
+            "pages": [
+              "host-to-host/overview",
+              "host-to-host/onboarding"
+            ]
+          },
+          {
+            "group": "Integration",
+            "pages": [
+              "host-to-host/security",
+              "host-to-host/sftp-and-file-naming",
+              "host-to-host/file-specifications",
+              "host-to-host/acknowledgements"
+            ]
+          },
+          {
+            "group": "Reference",
+            "pages": [
+              "host-to-host/errors-and-support",
+              "host-to-host/glossary"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "redirects": [
+    {
+      "source": "/getting-started/overview",
+      "destination": "/overview"
+    },
+    {
+      "source": "/getting-started/web-portal",
+      "destination": "/web-portal/sign-up"
+    },
+    {
+      "source": "/getting-started/admin-portal",
+      "destination": "/overview"
+    },
+    {
+      "source": "/getting-started/mobile",
+      "destination": "/mobile/overview"
+    },
+    {
+      "source": "/getting-started/host-to-host",
+      "destination": "/host-to-host/overview"
+    },
+    {
+      "source": "/dashboard",
+      "destination": "/web-portal/dashboard"
+    },
+    {
+      "source": "/settings/settings",
+      "destination": "/web-portal/settings"
+    },
+    {
+      "source": "/support/support",
+      "destination": "/support"
+    },
+    {
+      "source": "/account-services/cheque-management",
+      "destination": "/web-portal/accounts/cheque-management"
+    },
+    {
+      "source": "/account-services/accounts",
+      "destination": "/web-portal/accounts/accounts"
+    },
+    {
+      "source": "/account-services/sweep-payments",
+      "destination": "/web-portal/accounts/sweep-payments"
+    },
+    {
+      "source": "/account-services/transactions",
+      "destination": "/web-portal/accounts/transactions"
+    },
+    {
+      "source": "/account-services/statements",
+      "destination": "/web-portal/accounts/statements"
+    },
+    {
+      "source": "/account-services/virtual-token",
+      "destination": "/web-portal/accounts/virtual-token"
+    },
+    {
+      "source": "/account-services/beneficiaries",
+      "destination": "/web-portal/accounts/beneficiaries"
+    },
+    {
+      "source": "/approval-queue/activities-queue",
+      "destination": "/web-portal/approvals/activities-queue"
+    },
+    {
+      "source": "/approval-queue/transaction-queue",
+      "destination": "/web-portal/approvals/transaction-queue"
+    },
+    {
+      "source": "/payment-services/direct-debit",
+      "destination": "/web-portal/payments/direct-debit"
+    },
+    {
+      "source": "/payment-services/standing-instructions",
+      "destination": "/web-portal/payments/standing-instructions"
+    },
+    {
+      "source": "/payment-services/bulk-transfer",
+      "destination": "/web-portal/payments/bulk-transfer"
+    },
+    {
+      "source": "/payment-services/send-money",
+      "destination": "/web-portal/payments/send-money"
+    },
+    {
+      "source": "/payment-services/invoices",
+      "destination": "/web-portal/payments/invoices"
+    },
+    {
+      "source": "/payment-services/fcy-interbank-transfer",
+      "destination": "/web-portal/payments/fcy-interbank-transfer"
+    },
+    {
+      "source": "/payment-services/bank-to-wallet",
+      "destination": "/web-portal/payments/bank-to-wallet"
+    },
+    {
+      "source": "/payment-services/own-account-transfer",
+      "destination": "/web-portal/payments/own-account-transfer"
+    },
+    {
+      "source": "/administration/officer-settings",
+      "destination": "/web-portal/administration/officers"
+    },
+    {
+      "source": "/administration/roles-permissions",
+      "destination": "/web-portal/administration/roles-permissions"
+    },
+    {
+      "source": "/administration/officers",
+      "destination": "/web-portal/administration/officers"
+    },
+    {
+      "source": "/administration/organisation-settings",
+      "destination": "/web-portal/administration/officers"
+    },
+    {
+      "source": "/introduction",
+      "destination": "/"
+    },
+    {
+      "source": "/web-portal/administration/officer-settings",
+      "destination": "/web-portal/administration/officers"
+    },
+    {
+      "source": "/web-portal/administration/organisation-settings",
+      "destination": "/web-portal/administration/officers"
+    }
+  ],
+  "footer": {
+    "links": [
+      {
+        "header": "First Bank DRC",
+        "items": [
+          {
+            "label": "Support",
+            "href": "/support"
+          },
+          {
+            "label": "Platform overview",
+            "href": "/overview"
+          }
+        ]
+      }
+    ]
+  }
+}

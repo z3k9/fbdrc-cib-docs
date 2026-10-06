@@ -1,0 +1,261 @@
+---
+title: "Payment file specifications"
+sidebarTitle: "File specifications"
+description: "XML structure, header, and field definitions for all five H2H payment types, with ready-to-use templates"
+---
+
+H2H payment files use the ISO 20022 `pain.001.001.03` namespace and document envelope. The root element is `<Document>` and the main envelope is `<CstmrCdtTrfInitn>`. Inside the envelope, H2H uses a simplified payload defined by the Bank:
+
+- A `<header>` block with file-level details
+- A `<data>` block holding one or more `<transaction>` elements
+
+<Warning>
+Validate your files against the **H2H XSD published by the Bank**, not the generic ISO 20022 `pain.001.001.03` XSD. The `<header>`, `<data>`, and `<transaction>` elements are Bank-defined, so a generic pain.001 validator will reject a correctly formed H2H file.
+</Warning>
+
+## File header
+
+Every file, whatever the payment type, starts with the same header.
+
+```xml
+<header>
+  <fileid>Unique file identifier</fileid>
+  <creationdate>File creation date (YYYYMMDD)</creationdate>
+  <officeremail>Contact email of the authorised officer</officeremail>
+  <timestamp>File creation time (HHMMSS)</timestamp>
+</header>
+```
+
+| Field | Format | Required | Description |
+|---|---|---|---|
+| `<fileid>` | String | Yes | Unique ID for the file, used to detect duplicates and for audit. Recommended: customer reference + date + sequence number. |
+| `<creationdate>` | YYYYMMDD | Yes | Date the file was created, for example `20260601` |
+| `<officeremail>` | Email | Yes | Email of the authorised officer submitting the file. Used for notifications and the audit trail. |
+| `<timestamp>` | HHMMSS | Yes | Time the file was created, 24-hour clock, for example `143022` |
+
+## Field rules for all types
+
+- **Amounts:** numbers only. Decimals are allowed. Don't include currency symbols or commas.
+- **Currencies:** ISO 4217 codes, such as `CDF`, `USD`, or `EUR`.
+- **Transaction IDs:** must be unique. Recommended format: HHMMSS + YYYYMMDD + customer code + sequence, for example `14302220260601ACME01`.
+
+## Intrabank transfer (single currency)
+
+For transfers between two First Bank DRC accounts in the same currency (CDF or USD).
+
+| Field | Format | Required | Description |
+|---|---|---|---|
+| `<transactionid>` | String | Yes | Unique reference for this transaction within the file |
+| `<currency>` | ISO 4217 | Yes | Currency of the transfer. Must match the currency of both accounts. |
+| `<amount>` | Numeric | Yes | Transfer amount |
+| `<destinationaccountnumber>` | String | Yes | Beneficiary's First Bank DRC account number |
+| `<beneficiaryname>` | String | Yes | Full name of the beneficiary account holder |
+| `<sourceaccountnumber>` | String | Yes | First Bank DRC account to debit |
+| `<narration>` | String | Yes | Payment narration or reference. Appears on the beneficiary's statement. |
+
+```xml Intrabank template
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.03"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <header>
+      <fileid>[UniqueFileID]</fileid>
+      <creationdate>[YYYYMMDD]</creationdate>
+      <officeremail>[officer@company.com]</officeremail>
+      <timestamp>[HHMMSS]</timestamp>
+    </header>
+    <data>
+      <transaction>
+        <transactionid>[UniqueTransactionID]</transactionid>
+        <currency>[CDF or USD]</currency>
+        <amount>[Amount]</amount>
+        <destinationaccountnumber>[BeneficiaryAccountNumber]</destinationaccountnumber>
+        <beneficiaryname>[BeneficiaryFullName]</beneficiaryname>
+        <sourceaccountnumber>[DebitAccountNumber]</sourceaccountnumber>
+        <narration>[PaymentNarration]</narration>
+      </transaction>
+      <!-- Repeat the <transaction> block for each additional payment -->
+    </data>
+  </CstmrCdtTrfInitn>
+</Document>
+```
+
+## Intrabank transfer (multi-currency)
+
+For transfers between two First Bank DRC accounts in different currencies, for example CDF to USD. Use the **intrabank template above**. The only difference is that `<currency>` carries the **destination** currency. The Bank applies its prevailing FX rate at the time of processing.
+
+<Note>
+Check which currency pairs are supported with your relationship manager before sending multi-currency files.
+</Note>
+
+## Interbank transfer, local currency (LCY)
+
+For transfers from a First Bank DRC account to an account at another bank in the DRC, in CDF. These settle through ACH or RTGS.
+
+| Field | Format | Required | Description |
+|---|---|---|---|
+| `<transactionid>` | String | Yes | Unique transaction reference |
+| `<currency>` | ISO 4217 | Yes | Must be `CDF` |
+| `<amount>` | Numeric | Yes | Transfer amount |
+| `<destinationaccountnumber>` | String | Yes | Beneficiary's account number at the destination bank |
+| `<beneficiaryname>` | String | Yes | Full name of the beneficiary |
+| `<sourceaccountnumber>` | String | Yes | First Bank DRC account to debit |
+| `<destinationbankname>` | String | Yes | Full name of the destination bank |
+| `<destinationbankcode>` | String | Yes | The destination bank's code as used on ACH and RTGS, in the format confirmed during onboarding. Ask your relationship manager for the code list. |
+
+```xml Interbank LCY template
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.03"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <header>
+      <fileid>[UniqueFileID]</fileid>
+      <creationdate>[YYYYMMDD]</creationdate>
+      <officeremail>[officer@company.com]</officeremail>
+      <timestamp>[HHMMSS]</timestamp>
+    </header>
+    <data>
+      <transaction>
+        <transactionid>[UniqueTransactionID]</transactionid>
+        <currency>CDF</currency>
+        <amount>[Amount]</amount>
+        <destinationaccountnumber>[BeneficiaryAccountNumber]</destinationaccountnumber>
+        <beneficiaryname>[BeneficiaryFullName]</beneficiaryname>
+        <sourceaccountnumber>[DebitAccountNumber]</sourceaccountnumber>
+        <destinationbankname>[DestinationBankName]</destinationbankname>
+        <destinationbankcode>[DestinationBankCode]</destinationbankcode>
+      </transaction>
+      <!-- Repeat the <transaction> block for each additional payment -->
+    </data>
+  </CstmrCdtTrfInitn>
+</Document>
+```
+
+## Interbank transfer, foreign currency (FCY)
+
+For transfers from a First Bank DRC account to an account at another bank in the DRC, in a foreign currency such as USD or EUR. Where the source and destination currencies differ, the Bank converts at its prevailing rate.
+
+| Field | Format | Required | Description |
+|---|---|---|---|
+| `<transactionid>` | String | Yes | Unique transaction reference |
+| `<amount>` | Numeric | Yes | Transfer amount in the **source** currency |
+| `<sourcecurrency>` | ISO 4217 | Yes | Currency of the debit account, for example `CDF` or `USD` |
+| `<destinationcurrency>` | ISO 4217 | Yes | Currency of the beneficiary account, for example `USD` or `EUR` |
+| `<destinationaccountnumber>` | String | Yes | Beneficiary's account number at the destination bank |
+| `<beneficiaryname>` | String | Yes | Full name of the beneficiary |
+| `<sourceaccountnumber>` | String | Yes | First Bank DRC account to debit |
+| `<destinationbankname>` | String | Yes | Full name of the destination bank |
+| `<destinationbankcode>` | String | Yes | Destination bank code, in the same format as for LCY transfers |
+
+```xml Interbank FCY template
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.03"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <header>
+      <fileid>[UniqueFileID]</fileid>
+      <creationdate>[YYYYMMDD]</creationdate>
+      <officeremail>[officer@company.com]</officeremail>
+      <timestamp>[HHMMSS]</timestamp>
+    </header>
+    <data>
+      <transaction>
+        <transactionid>[UniqueTransactionID]</transactionid>
+        <amount>[Amount]</amount>
+        <sourcecurrency>[SourceCurrencyCode]</sourcecurrency>
+        <destinationcurrency>[DestinationCurrencyCode]</destinationcurrency>
+        <destinationaccountnumber>[BeneficiaryAccountNumber]</destinationaccountnumber>
+        <beneficiaryname>[BeneficiaryFullName]</beneficiaryname>
+        <sourceaccountnumber>[DebitAccountNumber]</sourceaccountnumber>
+        <destinationbankname>[DestinationBankName]</destinationbankname>
+        <destinationbankcode>[DestinationBankCode]</destinationbankcode>
+      </transaction>
+      <!-- Repeat the <transaction> block for each additional payment -->
+    </data>
+  </CstmrCdtTrfInitn>
+</Document>
+```
+
+## Foreign transfer (cross-border, SWIFT)
+
+For payments to an account at an overseas bank. These go through SWIFT and need the destination bank's BIC/SWIFT code. All foreign transfers are subject to First Bank DRC's FX approval process and applicable regulations.
+
+| Field | Format | Required | Description |
+|---|---|---|---|
+| `<amount>` | Numeric | Yes | Amount in the source account currency. The Bank converts at its prevailing rate. |
+| `<destinationaccountnumber>` | String | Yes | Beneficiary's account number or IBAN at the overseas bank |
+| `<beneficiaryname>` | String | Yes | Beneficiary's full legal name, as it appears on their account |
+| `<sourceaccountnumber>` | String | Yes | First Bank DRC account to debit |
+| `<narration>` | String | Yes | Payment reference or description. Sent to the beneficiary's bank in the SWIFT message. |
+| `<destinationbankname>` | String | Yes | Full name of the beneficiary's bank |
+| `<beneficiaryaddress>` | String | Yes | Beneficiary's address, line 1. Required for regulatory compliance. |
+| `<beneficiaryaddressline2>` | String | No | Beneficiary's address, line 2 |
+| `<beneficiarybankaddress>` | String | Yes | Full address of the beneficiary's bank. Required for SWIFT messaging. |
+| `<destinationcurrency>` | ISO 4217 | Yes | Currency of the destination account, for example `USD`, `GBP`, or `EUR` |
+| `<remittancepurposecode>` | String | Yes | Transfer purpose code required by the Banque Centrale du Congo (BCC). Ask your relationship manager for the list of valid codes. |
+| `<swiftcode>` | String | Yes | 8 or 11 character SWIFT/BIC code of the beneficiary's bank, for example `BARCGB22` |
+
+```xml Foreign transfer template
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.03"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <header>
+      <fileid>[UniqueFileID]</fileid>
+      <creationdate>[YYYYMMDD]</creationdate>
+      <officeremail>[officer@company.com]</officeremail>
+      <timestamp>[HHMMSS]</timestamp>
+    </header>
+    <data>
+      <transaction>
+        <amount>[Amount]</amount>
+        <destinationaccountnumber>[BeneficiaryAccount/IBAN]</destinationaccountnumber>
+        <beneficiaryname>[BeneficiaryFullLegalName]</beneficiaryname>
+        <sourceaccountnumber>[DebitAccountNumber]</sourceaccountnumber>
+        <narration>[PaymentReference]</narration>
+        <destinationbankname>[BeneficiaryBankFullName]</destinationbankname>
+        <beneficiaryaddress>[BeneficiaryAddressLine1]</beneficiaryaddress>
+        <beneficiaryaddressline2>[BeneficiaryAddressLine2]</beneficiaryaddressline2>
+        <beneficiarybankaddress>[BeneficiaryBankFullAddress]</beneficiarybankaddress>
+        <destinationcurrency>[ISO4217CurrencyCode]</destinationcurrency>
+        <remittancepurposecode>[BCCPurposeCode]</remittancepurposecode>
+        <swiftcode>[8or11CharBICCode]</swiftcode>
+      </transaction>
+      <!-- Repeat the <transaction> block for each additional payment -->
+    </data>
+  </CstmrCdtTrfInitn>
+</Document>
+```
+
+## Completed example
+
+An illustrative interbank (LCY) file. All names, accounts, and references are fictitious.
+
+```xml ACMECORP_INTERBANK_LCY_20260601_143500.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.03"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <header>
+      <fileid>ACME2026060100001</fileid>
+      <creationdate>20260601</creationdate>
+      <officeremail>payments@acmecorp.example</officeremail>
+      <timestamp>143500</timestamp>
+    </header>
+    <data>
+      <transaction>
+        <transactionid>14350020260601ACME01</transactionid>
+        <currency>CDF</currency>
+        <amount>250000.00</amount>
+        <destinationaccountnumber>00011000000123456789012</destinationaccountnumber>
+        <beneficiaryname>ADEOLA SUPPLIES LIMITED</beneficiaryname>
+        <sourceaccountnumber>00025000000987654321098</sourceaccountnumber>
+        <destinationbankname>Example Bank DRC</destinationbankname>
+        <destinationbankcode>99999</destinationbankcode>
+      </transaction>
+    </data>
+  </CstmrCdtTrfInitn>
+</Document>
+```
+
+Once the file is built, encrypt it with `bank_public_key` and upload it to your customer folder. See [SFTP folders and file naming](/host-to-host/sftp-and-file-naming).

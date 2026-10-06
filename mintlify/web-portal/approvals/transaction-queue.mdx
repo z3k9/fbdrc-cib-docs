@@ -1,0 +1,30 @@
+---
+title: "Transaction Queue"
+description: "Review and action pending transactions"
+---
+
+The Transaction Queue tracks payment transactions awaiting approval, split between Single Transfers and Bulk Transfers.
+
+<Frame caption="Transaction Queue with Pending, Approved, and Declined summary cards, and Single/Bulk Transfer tabs">
+  <img src="/images/web-portal/transaction-queue/transaction-queue-1.png" alt="Transaction Queue page showing Pending, Approved, and Declined summary cards, Single Transfers and Bulk Transfers tabs, filter pills for All, Pending, Approved, and Declined, and a table with Date, Source Account, Beneficiary Name, Amount, and Status columns" />
+</Frame>
+
+## Summary cards vs. filter pills
+
+<Note>
+The top summary cards show the **overall total** across both Single and Bulk Transfers. The filter pills (All, Pending, Approved, Declined) below them are scoped to whichever tab is currently active, so their counts will differ slightly from the cards above.
+</Note>
+
+| Card | Shows |
+|---|---|
+| **Pending** | Transactions awaiting approval, across all transfer types |
+| **Approved** | Transactions approved so far, across all transfer types |
+| **Declined** | Transactions declined, across all transfer types |
+
+## Single transfers and bulk transfers
+
+Use the tabs to switch between viewing single transaction approvals and bulk transfer approvals.
+
+## Pending approvals table
+
+Each row shows the transaction **Date**, **Source Account**, **Beneficiary Name**, **Amount**, and **Status**, such as `INITIATED`, `SUCCESSFUL TRANSACTION`, `UNSUCCESSFUL TRANSACTION`, or `ACCOUNT VALIDATED`. Each row has a view action and an overflow menu for additional options.

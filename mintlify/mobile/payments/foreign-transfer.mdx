@@ -1,0 +1,68 @@
+---
+title: "Foreign currency transfer (FCY)"
+sidebarTitle: "Foreign transfer (FCY)"
+description: "Send a foreign currency payment through SWIFT to a bank in the DRC or abroad"
+---
+
+Use **Foreign Transfer (FCY)** to send a cross-border or foreign currency payment through SWIFT. You may need to attach supporting documents.
+
+The same form handles two cases. You choose between them with **Where is the beneficiary bank?**
+
+| Option | Use it when |
+|---|---|
+| **Domestic** | You're sending foreign currency to a bank in the DRC |
+| **International** | You're sending to a bank outside the DRC |
+
+## Filling in the transfer details
+
+<Steps>
+  <Step title="Debit account and order type">
+    Choose the **Debit account** and the **Payment order type**, for example **Goods**.
+  </Step>
+  <Step title="Beneficiary bank location">
+    Select **Domestic** or **International**.
+  </Step>
+  <Step title="Beneficiary">
+    Choose **Saved beneficiary** or **One-time recipient**. For a one-time recipient, enter:
+
+    - **Beneficiary name** and **Beneficiary account number**
+    - **Beneficiary country** (required)
+    - **Beneficiary bank** (required)
+    - **Beneficiary address** and **Beneficiary bank address**
+    - **Bank BIC / SWIFT code** (optional, international transfers)
+  </Step>
+  <Step title="Amount and purpose">
+    Enter the **Amount**. The app spells the amount out in words so you can check it. Add an optional **Reference**, a **Reason for transfer**, and the **Remittance purpose** (required), for example **Spare parts**.
+  </Step>
+  <Step title="Supporting documents">
+    Upload the documents for the payment as PDF, JPG, or PNG files. The list includes **Invoice**, **Letter of undertaking**, **Custom Document**, **Inspection**, **Bill of Lading**, **Airway Bill**, and **Other**. Items labelled **Optional** can be skipped.
+
+    Tick **Save as beneficiary** if you'll pay this recipient again, then select **Continue** to review and submit the transfer.
+  </Step>
+</Steps>
+
+<Note>
+Like every transfer, an FCY payment goes to the Transaction Queue and must be approved by an Authorizer before it is processed.
+</Note>
+
+## Domestic example
+
+<Columns cols={2}>
+  <Frame caption="Domestic: beneficiary details">
+    <img src="/images/mobile/fcy-domestic-1.jpg" alt="Foreign Transfer step 1 of 2 with Domestic and One-time recipient selected, showing Debit account, Payment order type Goods, beneficiary name, account number, country Congo (DRC), and beneficiary bank" style={{ maxWidth: "300px" }} />
+  </Frame>
+  <Frame caption="Domestic: purpose and documents">
+    <img src="/images/mobile/fcy-domestic-2.jpg" alt="Foreign Transfer form scrolled down, showing Reason for transfer, Remittance purpose Spare parts, and supporting document uploads for Invoice, Letter of undertaking, Custom Document, Inspection, Bill of Lading, Airway Bill and Other" style={{ maxWidth: "300px" }} />
+  </Frame>
+</Columns>
+
+## International example
+
+<Columns cols={2}>
+  <Frame caption="International: beneficiary details">
+    <img src="/images/mobile/fcy-international-1.jpg" alt="Foreign Transfer step 1 of 2 with International and One-time recipient selected, showing beneficiary name, account number, country India, beneficiary bank, and an optional Bank BIC or SWIFT code field" style={{ maxWidth: "300px" }} />
+  </Frame>
+  <Frame caption="International: amount and documents">
+    <img src="/images/mobile/fcy-international-2.jpg" alt="Foreign Transfer form scrolled down, showing beneficiary address and bank address, Amount in USD with the amount in words, optional Reference, Reason for transfer, Remittance purpose, and supporting documents" style={{ maxWidth: "300px" }} />
+  </Frame>
+</Columns>

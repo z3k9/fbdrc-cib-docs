@@ -1,0 +1,44 @@
+---
+title: "Roles and permissions"
+description: "How Initiator and Authorizer roles control who can submit and who can approve"
+---
+
+Every officer on your organisation's account is given a role when they are added. The role decides whether the officer can submit transactions and requests, approve them, or both.
+
+## Role types
+
+| Role | What the officer can do |
+|---|---|
+| `ROLE_INITIATOR` | Create and submit transactions and requests. Submissions go to a queue for approval. |
+| `ROLE_AUTHORIZER` | Review items waiting in the [Transaction Queue](/web-portal/approvals/transaction-queue) and [Activities Queue](/web-portal/approvals/activities-queue), then approve or decline them. |
+| `ROLE_INITIATOR_AUTHORIZER` | Do both: submit items and approve them. |
+
+<Warning>
+An officer with `ROLE_INITIATOR_AUTHORIZER` can both create and approve transactions. Assign this role only where your organisation's internal controls allow it.
+</Warning>
+
+## Class of signatory
+
+Alongside the role, each officer is given a **Class of Signatory** (for example `A` or `B`). The class reflects the officer's signing authority.
+
+<Note>
+For the approval rules that apply to each class on your account, such as which classes must sign together, contact your relationship manager.
+</Note>
+
+## How the approval flow works
+
+<Steps>
+  <Step title="An Initiator submits">
+    An officer with initiation rights creates a payment or request, for example in [Send Money](/web-portal/payments/send-money).
+  </Step>
+  <Step title="The item is queued">
+    Transactions go to the **Transaction Queue**. Administrative changes go to the **Activities Queue**.
+  </Step>
+  <Step title="An Authorizer decides">
+    An officer with approval rights approves or declines the item. Approved transactions are then processed by the bank.
+  </Step>
+</Steps>
+
+## Assigning a role
+
+You choose the role and class of signatory in the last step of the **Add Officer** wizard. See [Officers](/web-portal/administration/officers) for the full walkthrough.

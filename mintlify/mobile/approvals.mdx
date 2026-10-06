@@ -1,0 +1,49 @@
+---
+title: "Approvals"
+description: "Review and approve transactions and administrative requests on the go"
+---
+
+Select **Approvals** in the bottom navigation bar to see everything waiting for a decision. The red badge on the tab shows how many items are pending.
+
+There are two queues:
+
+| Queue | What it holds |
+|---|---|
+| **Transaction Queue** | Payments submitted by Initiators, such as transfers and bulk uploads |
+| **Activity Queue** | Administrative requests, such as officer limits, account access, and onboarding changes |
+
+<Note>
+Only officers with an Authorizer role (`ROLE_AUTHORIZER` or `ROLE_INITIATOR_AUTHORIZER`) can approve items. See [Roles and permissions](/web-portal/administration/roles-permissions).
+</Note>
+
+## Transaction Queue
+
+<Frame caption="Transaction Queue">
+  <img src="/images/mobile/transaction-queue.jpg" alt="Transaction Queue with Single Transfers and Bulk Transfers tabs, Pending, Approved and Declined counts, filter tabs, and a list of transactions showing recipient, amount, bank, time and status" style={{ maxWidth: "300px" }} />
+</Frame>
+
+- Switch between **Single Transfers** and **Bulk Transfers** at the top.
+- The cards show how many items are **Pending**, **Approved**, and **Declined**.
+- Filter the list with **Pending**, **Approved**, **Declined**, or **All**.
+- Each item shows the recipient, amount, bank, when it was submitted, and its status.
+
+To approve, select a transaction to open it, review the details, and approve or decline it.
+
+## Activity Queue
+
+<Frame caption="Activity Queue">
+  <img src="/images/mobile/activity-queue.jpg" alt="Activity Queue with Pending, Approved and Declined counts and a list of requests such as Update officer limit, Update account access, Onboard new customer, Add preferred account, Create officer and Link user, each with the officer's name, time and status" style={{ maxWidth: "300px" }} />
+</Frame>
+
+Each request shows:
+
+- The action, such as **Update**, **Onboard**, **Add**, **Create**, or **Link**
+- What it affects, such as an officer limit, account access, or a preferred account
+- The officer it relates to, and when it was raised
+- Its status, for example **OrgProcessing**, **OrgApproved**, or **BankApproved**
+
+Select a request to review it and approve or decline it.
+
+<Tip>
+Some changes need approval from both your organisation (**OrgApproved**) and the bank (**BankApproved**) before they take effect.
+</Tip>

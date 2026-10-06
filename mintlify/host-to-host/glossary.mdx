@@ -1,0 +1,25 @@
+---
+title: "Glossary"
+description: "Terms used in the Host-to-Host documentation"
+---
+
+| Term | Meaning |
+|---|---|
+| **ACH** | Automated Clearing House. The DRC interbank clearing system for batch settlement of interbank transfers. |
+| **ACK** | Acknowledgement file. Returned by the Bank to the `/Acknowledgements/` folder after a payment file is processed. Rejected files produce an ACK named after the failure reason. |
+| **BCC** | Banque Centrale du Congo, the central bank of the DRC. It regulates payments and foreign exchange. |
+| **bank_public_key** | The Bank's PGP public key. You use it to encrypt payment files before upload. |
+| **CDF** | Congolese franc, the local currency of the DRC |
+| **CIB platform** | First Bank DRC's Corporate Internet Banking platform. It processes H2H payment files and creates acknowledgements. |
+| **customer_public_key** | Your PGP public key, uploaded to your SFTP folder. The Bank uses it to encrypt acknowledgement files. |
+| **FX** | Foreign exchange. The conversion between currencies for multi-currency and foreign transfers. |
+| **H2H (Host-to-Host)** | A direct, system-to-system link between your ERP or treasury system and the Bank's payment platform |
+| **IP whitelisting** | A security control that only allows SFTP connections from approved IP addresses |
+| **ISO 20022** | An international standard for financial messaging. H2H files use its `pain.001.001.03` namespace and envelope. |
+| **pain.001.001.03** | The ISO 20022 Customer Credit Transfer Initiation message. H2H uses its namespace and `<CstmrCdtTrfInitn>` envelope with a Bank-defined payload. |
+| **PGP / GPG** | Pretty Good Privacy / GNU Privacy Guard. The OpenPGP (RFC 4880) encryption standard used for H2H files. |
+| **RTGS** | Real-Time Gross Settlement. Used for high-value or urgent interbank transfers, settled individually and in real time. |
+| **SFTP** | SSH File Transfer Protocol. The encrypted protocol used to exchange files with the Bank. |
+| **SFTP credentials** | The username and password the Bank issues for your SFTP account |
+| **SWIFT / BIC** | The network and Bank Identifier Code used to identify banks in cross-border payments |
+| **UETR** | Unique End-to-end Transaction Reference. The SWIFT reference used to track a cross-border payment. |

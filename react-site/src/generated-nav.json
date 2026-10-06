@@ -1,0 +1,149 @@
+{
+  "tabs": [
+    {
+      "id": "webPortal",
+      "label": "Web Portal",
+      "first": "index"
+    },
+    {
+      "id": "mobileApp",
+      "label": "Mobile App",
+      "first": "mobile/overview"
+    },
+    {
+      "id": "hostToHost",
+      "label": "Host-to-Host",
+      "first": "host-to-host/overview"
+    }
+  ],
+  "redirects": [
+    {
+      "from": "/getting-started/overview",
+      "to": "/overview"
+    },
+    {
+      "from": "/getting-started/web-portal",
+      "to": "/web-portal/sign-up"
+    },
+    {
+      "from": "/getting-started/admin-portal",
+      "to": "/overview"
+    },
+    {
+      "from": "/getting-started/mobile",
+      "to": "/mobile/overview"
+    },
+    {
+      "from": "/getting-started/host-to-host",
+      "to": "/host-to-host/overview"
+    },
+    {
+      "from": "/dashboard",
+      "to": "/web-portal/dashboard"
+    },
+    {
+      "from": "/settings/settings",
+      "to": "/web-portal/settings"
+    },
+    {
+      "from": "/support/support",
+      "to": "/support"
+    },
+    {
+      "from": "/account-services/cheque-management",
+      "to": "/web-portal/accounts/cheque-management"
+    },
+    {
+      "from": "/account-services/accounts",
+      "to": "/web-portal/accounts/accounts"
+    },
+    {
+      "from": "/account-services/sweep-payments",
+      "to": "/web-portal/accounts/sweep-payments"
+    },
+    {
+      "from": "/account-services/transactions",
+      "to": "/web-portal/accounts/transactions"
+    },
+    {
+      "from": "/account-services/statements",
+      "to": "/web-portal/accounts/statements"
+    },
+    {
+      "from": "/account-services/virtual-token",
+      "to": "/web-portal/accounts/virtual-token"
+    },
+    {
+      "from": "/account-services/beneficiaries",
+      "to": "/web-portal/accounts/beneficiaries"
+    },
+    {
+      "from": "/approval-queue/activities-queue",
+      "to": "/web-portal/approvals/activities-queue"
+    },
+    {
+      "from": "/approval-queue/transaction-queue",
+      "to": "/web-portal/approvals/transaction-queue"
+    },
+    {
+      "from": "/payment-services/direct-debit",
+      "to": "/web-portal/payments/direct-debit"
+    },
+    {
+      "from": "/payment-services/standing-instructions",
+      "to": "/web-portal/payments/standing-instructions"
+    },
+    {
+      "from": "/payment-services/bulk-transfer",
+      "to": "/web-portal/payments/bulk-transfer"
+    },
+    {
+      "from": "/payment-services/send-money",
+      "to": "/web-portal/payments/send-money"
+    },
+    {
+      "from": "/payment-services/invoices",
+      "to": "/web-portal/payments/invoices"
+    },
+    {
+      "from": "/payment-services/fcy-interbank-transfer",
+      "to": "/web-portal/payments/fcy-interbank-transfer"
+    },
+    {
+      "from": "/payment-services/bank-to-wallet",
+      "to": "/web-portal/payments/bank-to-wallet"
+    },
+    {
+      "from": "/payment-services/own-account-transfer",
+      "to": "/web-portal/payments/own-account-transfer"
+    },
+    {
+      "from": "/administration/officer-settings",
+      "to": "/web-portal/administration/officers"
+    },
+    {
+      "from": "/administration/roles-permissions",
+      "to": "/web-portal/administration/roles-permissions"
+    },
+    {
+      "from": "/administration/officers",
+      "to": "/web-portal/administration/officers"
+    },
+    {
+      "from": "/administration/organisation-settings",
+      "to": "/web-portal/administration/officers"
+    },
+    {
+      "from": "/introduction",
+      "to": "/"
+    },
+    {
+      "from": "/web-portal/administration/officer-settings",
+      "to": "/web-portal/administration/officers"
+    },
+    {
+      "from": "/web-portal/administration/organisation-settings",
+      "to": "/web-portal/administration/officers"
+    }
+  ]
+}
